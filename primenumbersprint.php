@@ -4,6 +4,10 @@
     $primes = array();
     $input = 10;
 	
+	$results = array();
+    $passed = 0;
+    $failed = 0;
+	
 	while ($count < $input )
 	{
 		$div_count=0;
@@ -56,4 +60,63 @@ function print_value($i, $j, $primes = NULL)
         }
     }
 printPrimaNumberTable(10);
+
+function is_prime($number){
+	$number = (int) $number;
+	if ($number < 2) return false;
+	if ($number === 2 || $number === 3) return true;
+	if ($number % 2 === 0) return false;
+	return true;
+}
+	function primeTest() 
+    {
+		global $primes;
+		foreach($primes as $prime){
+			assertion(is_prime($prime), __METHOD__, "Number ".$prime." is a prime");
+		}
+        
+    }
+	function assertion($bool, $name, $desc = "")
+    {
+        if ($bool) {
+            pass($name, $desc);
+        } else {
+            fail($name, $desc);
+        }
+    }
+
+    function pass($method, $append = "") 
+    {
+		global $results, $passed;
+        $results[$method][] = "Green Pass: $append no color";
+        $passed++;
+    }
+
+    function fail($method, $append = "") 
+    {	
+		global $results, $passed;
+        $results[$method][] = "Red Fail: $append" . 'No color';
+        $failed++;
+    }
+	function print_test_results() 
+    {
+		global $results;
+
+        //$qty = 0;
+
+        foreach($results as $name => $result) {
+            $label = explode("::", $name);
+            $label = isset($label[1]) ? ucwords(str_replace("_", " ", $label[1])) : $label[0];
+//echo '<pre>'; print_r($result);die();
+            echo 'Method:' .$label;echo '<br/>';
+            foreach($result as $i => $line) {
+                echo $i+1 ."\t" . $line; echo '<br/>';
+                //printf("\t%d: %s\n", $qty + 1, $line); echo '<br/>';
+                //$qty++;
+            }
+        }        
+    }
+    echo '<br>';
+	primeTest();
+	print_test_results();
 ?>
