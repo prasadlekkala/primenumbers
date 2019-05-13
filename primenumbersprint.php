@@ -1,8 +1,8 @@
 <?php
-function primeNumbers($input){
     $count = 0 ;
     $number = 2;
     $primes = array();
+    $input = 10;
 	
 	while ($count < $input )
 	{
@@ -23,14 +23,13 @@ function primeNumbers($input){
 		}
 		$number=$number+1;
 	}
-    return $primes;
-}
-    function printPrimaNumberTable()
+    function printPrimaNumberTable($number)
     {
+        //$primes = primeNumbers($number);
         echo "<table border =\"1\" style='border-collapse: collapse'>";
-        for($i = 0; $i < 11; $i++) {
+        for($i = 0; $i < $number + 1; $i++) {
             echo "<tr>";
-            for($j = 0; $j < 11; $j++) {
+            for($j = 0; $j < $number + 1; $j++) {
                 if ($j == 0 && $i == 0) {
                     echo "<td></td>";
                 } else {
@@ -43,11 +42,11 @@ function primeNumbers($input){
         echo "</table>";
     }	
 
-function print_value($i, $j)
+function print_value($i, $j, $primes = NULL)
     {
-        $primes = primeNumbers(10);
+    global $primes;
         if ($j < $i) {
-            return print_value($j, $i);
+            return print_value($j, $i,$primes);
         } else {
             if ($i == 0) {
                 return $j == 0 ? null : $primes[$j - 1];
@@ -56,5 +55,5 @@ function print_value($i, $j)
             }
         }
     }
-printPrimaNumberTable();
+printPrimaNumberTable(10);
 ?>
